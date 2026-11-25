@@ -10,29 +10,46 @@ const prisma = new PrismaClient({ adapter });
 
 async function main() {
   // Create four genres
-  const fiction = await prisma.genre.upsert({
-    where: { name: 'Fiction' },
-    update: {},
-    create: { name: 'Fiction', description: 'Fictional literature and stories' },
-  });
+  // Create four genres
+const fiction = await prisma.genre.upsert({
+  where: { name: 'Fiction' },
+  update: { slug: 'fiction' },
+  create: {
+    name: 'Fiction',
+    slug: 'fiction',
+    description: 'Fictional literature and stories',
+  },
+});
 
-  const science = await prisma.genre.upsert({
-    where: { name: 'Science' },
-    update: {},
-    create: { name: 'Science', description: 'Scientific knowledge and discoveries' },
-  });
+const science = await prisma.genre.upsert({
+  where: { name: 'Science' },
+  update: { slug: 'science' },
+  create: {
+    name: 'Science',
+    slug: 'science',
+    description: 'Scientific knowledge and discoveries',
+  },
+});
 
-  const technology = await prisma.genre.upsert({
-    where: { name: 'Technology' },
-    update: {},
-    create: { name: 'Technology', description: 'Technology and computing' },
-  });
+const technology = await prisma.genre.upsert({
+  where: { name: 'Technology' },
+  update: { slug: 'technology' },
+  create: {
+    name: 'Technology',
+    slug: 'technology',
+    description: 'Technology and computing',
+  },
+});
 
-  const history = await prisma.genre.upsert({
-    where: { name: 'History' },
-    update: {},
-    create: { name: 'History', description: 'Historical events and civilizations' },
-  });
+const history = await prisma.genre.upsert({
+  where: { name: 'History' },
+  update: { slug: 'history' },
+  create: {
+    name: 'History',
+    slug: 'history',
+    description: 'Historical events and civilizations',
+  },
+});
 
   // Create sixteen books distributed across the genres
   const books = [
@@ -58,12 +75,20 @@ async function main() {
   ];
 
   for (const book of books) {
-    await prisma.book.upsert({
-      where: { isbn: book.isbn },
-      update: book,
-      create: book,
-    });
-  }
+  const description = `${book.title} by ${book.author}.`;
+
+  await prisma.book.upsert({
+    where: { isbn: book.isbn },
+    update: {
+      ...book,
+      description,
+    },
+    create: {
+      ...book,
+      description,
+    },
+  });
+}
 
   console.log('Seeding completed successfully!');
   console.log('4 genres and 16 books processed.');

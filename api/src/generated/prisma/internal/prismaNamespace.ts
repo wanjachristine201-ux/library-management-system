@@ -759,6 +759,7 @@ export const UserScalarFieldEnum = {
   id: 'id',
   name: 'name',
   email: 'email',
+  password: 'password',
   role: 'role',
   createdAt: 'createdAt'
 } as const
@@ -769,6 +770,7 @@ export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof User
 export const GenreScalarFieldEnum = {
   id: 'id',
   name: 'name',
+  slug: 'slug',
   description: 'description'
 } as const
 
@@ -780,6 +782,8 @@ export const BookScalarFieldEnum = {
   title: 'title',
   author: 'author',
   isbn: 'isbn',
+  description: 'description',
+  coverImage: 'coverImage',
   totalCopies: 'totalCopies',
   availableCopies: 'availableCopies',
   genreId: 'genreId',
